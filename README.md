@@ -24,6 +24,8 @@ CSS will be automatically inline with [Juice](https://www.npmjs.com/package/juic
 
 - `engine` (optional, String or Function) the template engine you are using. Defaults to the extension in the template argument.
 - `transport` (String) the email service you wish to use. Supported options are `mailgun` and `mandrill`. Required for the `send()` method to work, but not for `render()`
+- `mailgun` (optional, Object) options to pass to mailgun. See [mailgun-js](https://www.npmjs.com/package/mailgun-js)
+- `mandrill` (optional, Object) options to pass to mandrill. See the [Mandrill API Docs](https://mandrillapp.com/api/docs/index.nodejs.html)
 - `root` (optional, String) the root path to look in when resolving template paths. Defaults to the current working directory.
 
 #### Engines
@@ -39,16 +41,25 @@ If you don't want to parse your template, set your engine to `"html"`.
 Once you have created an Email instance, use the send method to send it:
 
 ```js
-new Email('template.pug', { transport: 'mailgun' }).send(sendOptions, (err) => { /* sent */ })
+new Email('template.pug', { transport: 'mailgun' }).send(locals, options, (err) => { /* sent */ })
 ```
+
+#### Arguments
+
+- `locals` (Object) local variables / options for the template engine
+- `options` (Object) options for the transport, extends options set in the `mailgun` or `mandrill` options passed to the Email constructor
+- `callback` (Function) called when the email has been sent, passed an error if one occurred
 
 ### Rendering Email
 
 You can also render the contents of an email without sending it, useful for providing a "view email in your browser" feature or previewing email templates during development.
 
 ```js
-new Email('template.pug').send(sendOptions, (err, { html, text }) => { /* rendered */ })
+new Email('template.pug').render(locals, (err, { html, text }) => { /* rendered */ })
 ```
+
+- `locals` (Object) local variables / options for the template engine
+- `callback` (Function) called when the email has been sent, passed an error if one occurred
 
 ## Breaking changes from Keystone.Email
 

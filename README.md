@@ -1,6 +1,8 @@
 # keystone-email
 
-Email helper for KeystoneJS Apps
+Email helper for KeystoneJS Apps.
+
+Makes it easier to send dynamic emails from templates with ether Mandrill or Mailgun, and includes support for automatically inlining CSS.
 
 ## Background
 
@@ -61,6 +63,16 @@ new Email('template.pug').render(locals, (err, { html, text }) => { /* rendered 
 - `locals` (Object) local variables / options for the template engine
 - `callback` (Function) called when the email has been sent, passed an error if one occurred
 
+## Usage with Mailgun
+
+The following `send()` options are applicable when using `mailgun` as the transport:
+
+- `apiKey` (required, String) Your API Key, defaults to `process.env.MAILGUN_API_KEY`
+- `domain` (required, String) Your sending domain, defaults to `process.env.MAILGUN_DOMAIN`
+- `inlineCSS` (optional, Boolean) whether to inline CSS classes in your template, defaults to `true`
+
+See [mailgun-js](https://www.npmjs.com/package/mailgun-js) and [the Mailgun API Docs](https://documentation.mailgun.com/api-sending.html#sending) for the full set of supported options.
+
 ## Breaking changes from Keystone.Email
 
 ### Template helpers
@@ -83,6 +95,10 @@ theme: {}
 ### Mandrill template support
 
 Mandrill template support has been dropped. If you are going to use this, you're not using most of the functionality of this package anyway, and we suggest you simply use Mandrill's API directly.
+
+### Automatic tagging
+
+Keystone would previously automatically tag emails with the sent date and template name. That's pretty opinionated and of questionable usefulness, if you still want this behaviour it's easy to add tags yourself in the `send()` options.
 
 ### Path changes
 

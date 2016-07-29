@@ -73,6 +73,49 @@ The following `send()` options are applicable when using `mailgun` as the transp
 
 See [mailgun-js](https://www.npmjs.com/package/mailgun-js) and [the Mailgun API Docs](https://documentation.mailgun.com/api-sending.html#sending) for the full set of supported options.
 
+## Usage with Mandrill
+
+The following `send()` options are applicable when using `mandrill` as the transport:
+
+- `apiKey` (required, String) Your API Key, defaults to `process.env.MANDRILL_API_KEY`
+- `from` (String or Object) The name and email to send from (see below)
+- `globalMergeVars` (Object) Mandrill global merge vars in Object format (keys can be nested), will be flattened into the array format Mandrill expects
+- `to` (String, Object or Array) The recipient(s) of the email (see below)
+
+See [the Mandrill API Docs](https://mandrillapp.com/api/docs/messages.nodejs.html#method-send) for the full set of supported options.
+
+### From option
+
+The `from` option can be a String (email address), or Object containing `name` and `email`. In the object form, `name` can also be an object containing `first` and `last` (which will be concatenated with a space). This simplifies usage with `User` models in KeystoneJS. For example:
+
+```js
+{ from: 'user@keystonejs.com' }
+{ from: { email: 'user@keystonejs.com', name: 'Jed Watson' }
+{ from: { email: 'user@keystonejs.com', name: { first: 'Jed', last: 'Watson' } }
+```
+
+### To option
+
+The `to` option can be a single recipient or an Array of recipients. Each recipient is represented by a String (email address) or Object containing `name`, `email` and optional `vars`. As with `from`, name can be an object with `first` and `last` properties.
+
+Mandrill `merge_vars` are built for each recipient, including `email`, `name`, `first_name` and `last_name`, as well as any properties in the `vars` object for each recipient. Nested objects are supported and are automatically flattened into the array format Mandrill expects. For example:
+
+```js
+// single recipient
+{ to: 'user@keystonejs.com' }
+{ to: { email: 'user@keystonejs.com', name: 'Jed Watson' } }
+{ to: {
+	email: 'user@keystonejs.com',
+	name: { first: 'Jed', last: 'Watson' },
+	vars: { role: 'Developer' }
+} }
+// multiple recipients
+{ to: [
+	{ email: 'user@keystonejs.com', name: 'Jed Watson', vars: { home: 'Sydney' } }
+	{ email: 'user@keystonejs.com', name: 'Max Stoiber', vars: { home: 'Vienna' } }
+] }
+```
+
 ## Breaking changes from Keystone.Email
 
 ### Template helpers
@@ -104,6 +147,9 @@ Keystone would previously automatically tag emails with the sent date and templa
 
 You could previously use a directory as the template name, and Keystone.Email would look for an `email.{ext}` file (where ext is your template language's default extension). This is no longer supported, please provide the full path to your email template.
 
+### To, From and Contents validation
+
+Keystone would previous return errors if the subject, contents, recipient(s) or the sender address were invalid. This is no longer handled by the library, please make sure you validate these options before sending the emails. If the transport validates these options, errors will be passed directly to the callback.
 
 ## License
 

@@ -69,7 +69,11 @@ The following `send()` options are applicable when using `mailgun` as the transp
 
 - `apiKey` (required, String) Your API Key, defaults to `process.env.MAILGUN_API_KEY`
 - `domain` (required, String) Your sending domain, defaults to `process.env.MAILGUN_DOMAIN`
-- `inlineCSS` (optional, Boolean) whether to inline CSS classes in your template, defaults to `true`
+- `from` (String or Object) The name and email to send from (see below)
+- `inlineCSS` (Boolean) inline CSS classes in your template, defaults to `true`
+- `to` (String, Object or Array) The recipient(s) of the email (see below)
+- `o:tracking` (Boolean) track open and click statistics for the email, defaults to `true`
+- `recipient-variables` (Object) Mailgun merge variables in Object format (keyed by email address)
 
 See [mailgun-js](https://www.npmjs.com/package/mailgun-js) and [the Mailgun API Docs](https://documentation.mailgun.com/api-sending.html#sending) for the full set of supported options.
 
@@ -78,13 +82,18 @@ See [mailgun-js](https://www.npmjs.com/package/mailgun-js) and [the Mailgun API 
 The following `send()` options are applicable when using `mandrill` as the transport:
 
 - `apiKey` (required, String) Your API Key, defaults to `process.env.MANDRILL_API_KEY`
+- `async` (Boolean) send the email asynchronously, defaults to `true`
 - `from` (String or Object) The name and email to send from (see below)
 - `globalMergeVars` (Object) Mandrill global merge vars in Object format (keys can be nested), will be flattened into the array format Mandrill expects
+- `inline_css` (Boolean) inline CSS classes in your template, defaults to `true`
+- `preserve_recipients` (Boolean) put all recipients in the `to` field, defaults to `false`
 - `to` (String, Object or Array) The recipient(s) of the email (see below)
+- `track_clicks` (Boolean) track click statistics for the email, defaults to `true`
+- `track_opens` (Boolean) track open statistics for the email, defaults to `true`
 
 See [the Mandrill API Docs](https://mandrillapp.com/api/docs/messages.nodejs.html#method-send) for the full set of supported options.
 
-### From option
+## From option
 
 The `from` option can be a String (email address), or Object containing `name` and `email`. In the object form, `name` can also be an object containing `first` and `last` (which will be concatenated with a space). This simplifies usage with `User` models in KeystoneJS. For example:
 
@@ -94,11 +103,15 @@ The `from` option can be a String (email address), or Object containing `name` a
 { from: { email: 'user@keystonejs.com', name: { first: 'Jed', last: 'Watson' } }
 ```
 
-### To option
+## To option
 
 The `to` option can be a single recipient or an Array of recipients. Each recipient is represented by a String (email address) or Object containing `name`, `email` and optional `vars`. As with `from`, name can be an object with `first` and `last` properties.
 
-Mandrill `merge_vars` are built for each recipient, including `email`, `name`, `first_name` and `last_name`, as well as any properties in the `vars` object for each recipient. Nested objects are supported and are automatically flattened into the array format Mandrill expects. For example:
+For Mandrill, `merge_vars` are built for each recipient, including `email`, `name`, `first_name` and `last_name`, as well as any properties in the `vars` object for each recipient. Nested objects are supported and are automatically flattened into the array format Mandrill expects.
+
+For Mailgun, `recipient-variables` are built for each recipient, including `email`, `name`, `first_name` and `last_name`, as well as any properties in the `vars` object for each recipient. Existing `recipient-variables` are left intact.
+
+Full example of specifying recipients in various formats:
 
 ```js
 // single recipient

@@ -4,7 +4,7 @@ Email helper for KeystoneJS Apps.
 
 Makes it easier to send dynamic emails from templates with ether Mandrill or Mailgun, and includes support for automatically inlining CSS.
 
-## Background
+### Background
 
 This module is currently WIP. We're moving the built-in email functionality out of KeystoneJS core into its own package, so that it's not bundled by default and can be updated independently.
 
@@ -26,8 +26,6 @@ CSS will be automatically inline with [Juice](https://www.npmjs.com/package/juic
 
 - `engine` (optional, String or Function) the template engine you are using. Defaults to the extension in the template argument.
 - `transport` (String) the email service you wish to use. Supported options are `mailgun` and `mandrill`. Required for the `send()` method to work, but not for `render()`
-- `mailgun` (optional, Object) options to pass to mailgun. See [mailgun-js](https://www.npmjs.com/package/mailgun-js)
-- `mandrill` (optional, Object) options to pass to mandrill. See the [Mandrill API Docs](https://mandrillapp.com/api/docs/index.nodejs.html)
 - `root` (optional, String) the root path to look in when resolving template paths. Defaults to the current working directory.
 
 #### Engines

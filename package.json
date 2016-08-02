@@ -17,7 +17,8 @@
     "eslint": "^2.11.0",
     "eslint-config-keystone": "^2.4.0",
     "eslint-plugin-react": "^5.2.2",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "pug": "^2.0.0-beta4"
   },
   "scripts": {
     "test": "npm run lint && npm run test-unit",

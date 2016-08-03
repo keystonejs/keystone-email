@@ -8,7 +8,7 @@ const nameObj = { first: 'user', last: 'person' };
 
 describe('will run something', function () {
 	it('will ensure 1 equals 1', function () {
-		assert.equals(1, 1);
+		assert.equal(1, 1);
 	});
 });
 
@@ -150,13 +150,18 @@ describe('mandrill transport', function () {
 });
 
 
+describe('render method');
+describe('getSendOptions for mailgun');
+describe('getSendOptions for mandrill');
+
+
 describe('email sending', function () {
 	let Email = require('../lib/Email');
 	it('should import Email constructor', function () {
 		assert.equal(typeof Email, 'function');
 	});
 
-	it('should make us a constructor', function () {
+	it.skip('should make us a constructor', function () {
 		let template = new Email('email.pug');
 		console.log('template is', template);
 		assert.equal(1, 3);

@@ -21,6 +21,12 @@ if (!mandrillApiKey && (!mailgunApiKey || !mailgunDomain)) {
 var templateOptions = require('./tests/emails/' + template + '/options');
 var templatePath = './tests/emails/' + template + '/template.pug';
 
+var toArray = [
+	to,
+	{ name: 'Test Recipient', email: to.split('@').join('+1@'), vars: { testVar: 'Our test variable' } },
+	{ name: { first: 'Test First', last: 'Test Last' }, email: to.split('@').join('+2@') },
+];
+
 if (mailgunApiKey) {
 	Email.send(
 		// template path
@@ -33,7 +39,8 @@ if (mailgunApiKey) {
 		templateOptions,
 		// Send options
 		{
-			to: to,
+			to: toArray,
+			subject: 'Why hello there! ... from keystone-email ' + Date.now(),
 			from: { name: 'Test', email: 'user@keystonejs.com' },
 			apiKey: mailgunApiKey,
 			domain: mailgunDomain,
@@ -58,14 +65,14 @@ if (mandrillApiKey) {
 		templateOptions,
 		// Send options
 		{
-			to: to,
+			to: toArray,
+			subject: 'Why hello there! ... from keystone-email ' + Date.now(),
 			from: { name: 'Test', email: 'user@keystonejs.com' },
 			apiKey: mandrillApiKey,
 		},
 		// callback
 		function (err, result) {
 			if (err) console.error('there was an error', err, err.stack);
-			if (result) console.log('our result was', result);
 		}
 	);
 }

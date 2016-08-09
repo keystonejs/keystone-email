@@ -47,8 +47,11 @@ if (mailgunApiKey) {
 		},
 		// callback
 		function (err, result) {
-			if (err) console.error('there was an error', err);
-			if (result) console.log('our result was', result);
+			if (err) {
+				console.error('🤕 Mailgun test failed with error:\n', err);
+			} else {
+				console.log('📬 Successfully sent Mailgun test with result:\n', result);
+			}
 		}
 	);
 }
@@ -72,7 +75,11 @@ if (mandrillApiKey) {
 		},
 		// callback
 		function (err, result) {
-			if (err) console.error('there was an error', err, err.stack);
+			if (err) {
+				console.error('🤕 Mandrill test failed with error:\n', err);
+			} else {
+				console.log('📬 Successfully sent Mandrill test with result:\n', result);
+			}
 		}
 	);
 }

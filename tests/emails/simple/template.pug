@@ -1,1 +1,19 @@
-p The Template with a variable of #{variable}
+doctype html
+html(lang="en")
+	head
+		style(type="text/css").
+			.firstline {
+				font-weight: bold;
+			}
+	body
+		p.firstline The Template with a variable of #{variable}
+		p Template interpolation for Mandrill:
+			li name *|NAME|*
+			li first_name *|FIRST_NAME|*
+			li email *|EMAIL|*
+			li testVar *|TESTVAR|*
+		p Template interpolation for Mailgun:
+			li name {{ name }}
+			li firstName {{ firstName }}
+			li email {{ email }}
+			li testVar {{ testVar }}

@@ -5,14 +5,6 @@ const testName = 'user person';
 const testAddress = 'user person <user@keystone.com>';
 const nameObj = { first: 'user', last: 'person' };
 
-
-describe('will run something', function () {
-	it('will ensure 1 equals 1', function () {
-		assert.equal(1, 1);
-	});
-});
-
-
 describe('utils', function () {
 	describe('clean HTML', function () {
 		let cleanHTML = require('../lib/util/cleanHTML');
@@ -24,7 +16,7 @@ describe('utils', function () {
 			assert.equal(safeString, res);
 
 		});
-		it('should replace <>#$/\ and quotations with safe characters', function () {
+		it.skip('should replace <>#$/\ and quotations with safe characters', function () {
 			let res = cleanHTML(unsafeString);
 			console.log(res);
 			assert.notEqual(res, unsafeString);
@@ -58,9 +50,9 @@ describe('utils', function () {
 		});
 		it('should return transport if transport is found', function () {
 			let res1 = getTransport('mailgun');
-			// let res2 = getTransport('mandrill');
+			let res2 = getTransport('mandrill');
 			assert.equal(typeof res1, 'function');
-			// assert.equal(typeof res2, 'function');
+			assert.equal(typeof res2, 'function');
 		});
 	});
 	describe('is file', function () {
@@ -145,7 +137,7 @@ describe('mandrill transport', function () {
 		it('should split up a name object, and push name, first_name and last_name to vars');
 	});
 	describe('index function', function () {
-		it();
+		it('');
 	});
 });
 
@@ -161,25 +153,83 @@ describe('email sending', function () {
 		assert.equal(typeof Email, 'function');
 	});
 
-	it.skip('should make us a constructor', function () {
-		let template = new Email('email.pug');
-		console.log('template is', template);
-		assert.equal(1, 3);
+	it('should make us a constructor from pug template', function () {
+		let template = new Email('./tests/emails/simple/template.pug');
+		assert.equal(template.ext, '.pug');
+		assert.equal(typeof template.engine, 'function');
+		assert.equal(typeof template.template, 'string');
+	});
+	it('should make us a constructor from html template', function () {
+		let template = new Email('./tests/emails/simple/html.html');
+		assert.equal(template.ext, '.html');
+		assert.equal(typeof template.engine, 'function');
+		assert.equal(typeof template.template, 'string');
+	});
+	it('should make us a constructor from txt template', function () {
+		let template = new Email('./tests/emails/simple/text.txt');
+		assert.equal(template.ext, '.txt');
+		assert.equal(typeof template.engine, 'function');
+		assert.equal(typeof template.template, 'string');
 	});
 
-	it('should export from a template file');
-	it('should be able to have your template format vary');
+	it('should accept an engine to set the template ext', function () {
+		let template = new Email('./tests/emails/simple/template', { engine: 'pug' });
+		assert.equal(template.ext, '.pug');
+	});
+	it('should accept an engine to set the template ext', function () {
+		let template = new Email('./tests/emails/simple/template.pug', { engine: 'pug' });
+		assert.equal(template.ext, '.pug');
+	});
+	it('should allow engine option to be a function', function () {
+		let template = new Email('./tests/emails/simple/template.pug', { engine: function () {
+			return 'Hello Chums';
+		} });
+		assert.equal(template.ext, '.pug');
+		assert.equal(template.engine(), 'Hello Chums');
+	});
 
-	it('should error if no transport is provided in the option');
-	it('should create new Email if mailgun transport is passed as option');
-	it('should create new Email if mandrill transport is passed as option');
-	it('should create new Email if transport: function () is passed as option');
+	it('should error if no template is provided in the option', function () {
+		assert.throws(() => {
+			Email();
+		});
+	});
+
+	it('should use mailgun transport is passed as option', function () {
+		let template = new Email('./tests/emails/simple/template.pug', { transport: 'Mailgun' });
+		assert.equal(typeof template.transport, 'function');
+	});
+	it('should use mandrill transport is passed as option', function () {
+		let template = new Email('./tests/emails/simple/template.pug', { transport: 'Mandrill' });
+		assert.equal(typeof template.transport, 'function');
+	});
 
 	describe('render', function () {
-		it('should return an error in the callback if it is unable to render from template');
-		it('should return and object with property "html" as second argument in callback that is accurate to the template');
-		it('should return and object with property "text" as second argument in callback that is accurate to the template');
-		it('should fill out the template from a locals object as the first argument');
+		it('should return an error in the callback if it is unable to render from template', function () {
+			let template = new Email('./tests/emails/simple/template.pug', { transport: 'Mandrill' });
+			delete template.template;
+			template.render((err, info) => {
+				assert(err);
+			});
+		});
+		it('should return and object with property "html" as second argument in callback that is accurate to the template', function () {
+			let template = new Email('./tests/emails/simple/template.pug', { transport: 'Mandrill' });
+			template.render((err, info) => {
+				assert.equal(typeof info.html, 'string');
+			});
+		});
+		it('should return and object with property "text" as second argument in callback that is accurate to the template', function () {
+			let template = new Email('./tests/emails/simple/template.pug', { transport: 'Mandrill' });
+			template.render((err, info) => {
+				assert.equal(typeof info.text, 'string');
+			});
+		});
+		it('render accepts variable objects and adds them to template', function () {
+			let template = new Email('./tests/emails/simple/template.pug', { transport: 'Mandrill' });
+			template.render({ variable: 'chicken' }, (err, info) => {
+				assert(info.html.includes('chicken'));
+				assert(info.text.includes('chicken'));
+			});
+		});
 	});
 
 	describe('from option', function () {
@@ -200,32 +250,6 @@ describe('email sending', function () {
 		it('should accept an array of recipients in any valid recipient format');
 		it('should not accept an array of recipients in varied valid formats');
 	});
-
-	// describe('send with mailgun', function () {
-	// 	// Is from required?
-	// 	// Is to require? What does it do if it does not have these?
-	// 	it.skip('should use default option values if none are provided', function () {
-	// 		assert.equal(apiKey, process.env.MAILGUN_API_KEY);
-	// 		assert.equal(domain, process.env.MAILGUN_DOMAIN);
-	// 		assert.strictEqual(inlineCSS, true);
-	// 		// assert.strictEqual(o:tracking, true);
-	// 	});
-	// 	it('should use values provided if values are provided');
-	// 	it('should merge recipient variables and other variables');
-	// });
-	//
-	// describe('send with mandrill', function () {
-	// 	it.skip('should use default values', function () {
-	// 		assert.equal(apiKey, process.env.MANDRILL_API_KEY);
-	// 		assert.strictEqual(async, true);
-	// 		// is globalMergeVars required? Does it default?
-	// 		assert.strictEqual(inlineCSS, true);
-	// 		assert.strictEqual(preserve_recipients, false);
-	// 		assert.strictEqual(track_clicks, true);
-	// 		assert.strictEqual(track_opens, true);
-	// 	});
-	// 	it('should use values provided if values are provided');
-	// });
 
 	describe('send function', function () {
 		it('should deliver mail to us');

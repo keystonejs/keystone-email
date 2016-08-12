@@ -6,7 +6,7 @@ Makes it easier to send dynamic emails from templates with ether Mandrill or Mai
 
 ### Background
 
-This module is currently WIP. We're moving the built-in email functionality out of KeystoneJS core into its own package, so that it's not bundled by default and can be updated independently.
+We're moving the built-in email functionality out of KeystoneJS core (`keystone.Email`) into its own package, so that it's not bundled by default and can be updated independently.
 
 If you're interested in helping out, please open an issue!
 
@@ -15,7 +15,8 @@ If you're interested in helping out, please open an issue!
 Create a new Email instance with a template and options:
 
 ```
-new Email(template, options)
+var Email = require('keystone-email')
+new Email(template, emailOptions)
 ```
 
 HTML from your template will automatically be converted to text using the [html-to-text](https://www.npmjs.com/package/html-to-text) package.
@@ -127,7 +128,7 @@ Full example of specifying recipients in various formats:
 ] }
 ```
 
-## Breaking changes from Keystone.Email
+## Breaking changes from `keystone.Email`
 
 ### Template helpers
 

@@ -165,7 +165,7 @@ describe('email sending', function () {
 		assert.equal(typeof template.engine, 'function');
 		assert.equal(typeof template.template, 'string');
 	});
-	it('should make us a constructor from txt template', function () {
+	it.skip('should make us a constructor from txt template', function () {
 		let template = new Email('./tests/emails/simple/text.txt');
 		assert.equal(template.ext, '.txt');
 		assert.equal(typeof template.engine, 'function');

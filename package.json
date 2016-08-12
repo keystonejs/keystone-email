@@ -17,12 +17,15 @@
     "eslint": "^2.11.0",
     "eslint-config-keystone": "^2.4.0",
     "eslint-plugin-react": "^5.2.2",
+    "istanbul": "^0.4.4",
     "mocha": "^3.0.2",
     "pug": "^2.0.0-beta5"
   },
   "scripts": {
     "test": "npm run lint && npm run test-unit",
+    "posttest": "npm run coverage",
     "test-unit": "mocha tests",
+    "coverage": "istanbul cover _mocha tests",
     "lint": "eslint ."
   },
   "repository": {

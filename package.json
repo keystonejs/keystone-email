@@ -27,7 +27,7 @@
     "test-unit": "mocha tests",
     "coverage": "istanbul cover _mocha tests",
     "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
-    "lint": "eslint ."
+    "lint": "eslint . --ignore-path .gitignore"
   },
   "repository": {
     "type": "git",

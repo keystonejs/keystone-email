@@ -1,8 +1,15 @@
 # keystone-email
 
-Email helper for KeystoneJS Apps.
+Email helper for KeystoneJS and Node.js Applications. Makes it easy to send dynamic emails from templates, to one or multiple recipients.
 
-Makes it easier to send dynamic emails from templates with ether Mandrill or Mailgun, and includes support for automatically inlining CSS.
+Features include:
+
+* Express-like template system (including support for any express-compatible template engine)
+* Support for different email sending services (Mandrill and Mailgun are available now, more may be added)
+* Understands Keystone User models, making it easy to send emails to the results of a query
+* Automatically transforms user variables into the correct format for each email service, for mail-merge style variable use
+* CSS Stylesheets are automatically inlined for robust email client compatibility
+* Text copy is automatically extracted from HTML content
 
 ### Background
 

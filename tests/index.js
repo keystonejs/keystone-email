@@ -195,36 +195,36 @@ describe('email sending', function () {
 	});
 
 	it('should use mailgun transport is passed as option', function () {
-		var template = new Email('./tests/emails/simple/template.pug', { transport: 'Mailgun' });
+		var template = new Email('./tests/emails/simple/template.pug', { transport: 'mailgun' });
 		assert.equal(typeof template.transport, 'function');
 	});
 	it('should use mandrill transport is passed as option', function () {
-		var template = new Email('./tests/emails/simple/template.pug', { transport: 'Mandrill' });
+		var template = new Email('./tests/emails/simple/template.pug', { transport: 'mandrill' });
 		assert.equal(typeof template.transport, 'function');
 	});
 
 	describe('render', function () {
 		it('should return an error in the callback if it is unable to render from template', function () {
-			var template = new Email('./tests/emails/simple/template.pug', { transport: 'Mandrill' });
+			var template = new Email('./tests/emails/simple/template.pug', { transport: 'mandrill' });
 			delete template.template;
 			template.render(function (err, info) {
 				assert(err);
 			});
 		});
 		it('should return and object with property "html" as second argument in callback that is accurate to the template', function () {
-			var template = new Email('./tests/emails/simple/template.pug', { transport: 'Mandrill' });
+			var template = new Email('./tests/emails/simple/template.pug', { transport: 'mandrill' });
 			template.render(function (err, info) {
 				assert.equal(typeof info.html, 'string');
 			});
 		});
 		it('should return and object with property "text" as second argument in callback that is accurate to the template', function () {
-			var template = new Email('./tests/emails/simple/template.pug', { transport: 'Mandrill' });
+			var template = new Email('./tests/emails/simple/template.pug', { transport: 'mandrill' });
 			template.render(function (err, info) {
 				assert.equal(typeof info.text, 'string');
 			});
 		});
 		it('render accepts variable objects and adds them to template', function () {
-			var template = new Email('./tests/emails/simple/template.pug', { transport: 'Mandrill' });
+			var template = new Email('./tests/emails/simple/template.pug', { transport: 'mandrill' });
 			template.render({ variable: 'chicken' }, function (err, info) {
 				assert(info.html.includes('chicken'));
 				assert(info.text.includes('chicken'));

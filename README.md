@@ -104,9 +104,9 @@ See [the Mandrill API Docs](https://mandrillapp.com/api/docs/messages.nodejs.htm
 The `from` option can be a String (email address), or Object containing `name` and `email`. In the object form, `name` can also be an object containing `first` and `last` (which will be concatenated with a space). This simplifies usage with `User` models in KeystoneJS. For example:
 
 ```js
-{ from: 'user@keystonejs.com' }
-{ from: { email: 'user@keystonejs.com', name: 'Jed Watson' }
-{ from: { email: 'user@keystonejs.com', name: { first: 'Jed', last: 'Watson' } }
+{ from: 'user@keystonejs.com' };
+{ from: { email: 'user@keystonejs.com', name: 'Jed Watson' } };
+{ from: { email: 'user@keystonejs.com', name: { first: 'Jed', last: 'Watson' } } };
 ```
 
 ## To option
@@ -145,11 +145,11 @@ The built-in template helpers have been removed. If you used these are are inter
 
 Default locals have been removed. If you need them, please pass them explicitly. They were:
 
-```
+```js
 pretty: true,
 _: require('lodash'),
 moment: require('moment'),
-utils: require('keystone-utils),
+utils: require('keystone-utils'),
 subject: '(no subject)',
 theme: {}
 ```

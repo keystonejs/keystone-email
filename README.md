@@ -149,7 +149,7 @@ Default locals have been removed. If you need them, please pass them explicitly.
 pretty: true,
 _: require('lodash'),
 moment: require('moment'),
-utils: require('keystone-utils),
+utils: require('keystone-utils'),
 subject: '(no subject)',
 theme: {}
 ```

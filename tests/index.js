@@ -225,9 +225,9 @@ describe('email sending', function () {
 		});
 		it('render accepts variable objects and adds them to template', function () {
 			var template = new Email('./tests/emails/simple/template.pug', { transport: 'mandrill' });
-			template.render({ variable: 'chicken' }, function (err, info) {
-				assert(info.html.includes('chicken'));
-				assert(info.text.includes('chicken'));
+			template.render({ variable: 'chocolate' }, function (err, info) {
+				assert(info.html.indexOf('chocolate') >= 0, 'variable not found in parsed template');
+				assert(info.text.indexOf('chocolate') >= 0, 'variable not found in parsed template');
 			});
 		});
 	});

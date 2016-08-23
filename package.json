@@ -1,6 +1,6 @@
 {
   "name": "keystone-email",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Email helper for KeystoneJS Apps",
   "main": "index.js",
   "dependencies": {

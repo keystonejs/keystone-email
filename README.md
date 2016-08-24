@@ -55,7 +55,7 @@ new Email('template.pug', { transport: 'mailgun' }).send(locals, options, (err) 
 #### Arguments
 
 - `locals` (Object) local variables / options for the template engine
-- `options` (Object) options for the transport, extends options set in the `mailgun` or `mandrill` options passed to the Email constructor
+- `options` (Object) options for the transport, extends the options passed to the Email constructor
 - `callback` (Function) called when the email has been sent, passed an error if one occurred
 
 ### Rendering Email

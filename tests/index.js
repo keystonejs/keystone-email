@@ -142,9 +142,9 @@ describe('mandrill transport', function () {
 });
 
 
-describe('render method');
-describe('getSendOptions for mailgun');
-describe('getSendOptions for mandrill');
+// describe('render method');
+// describe('getSendOptions for mailgun');
+// describe('getSendOptions for mandrill');
 
 
 describe('email sending', function () {

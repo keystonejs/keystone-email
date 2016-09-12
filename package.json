@@ -10,6 +10,7 @@
     "lodash": "^4.15.0",
     "mailgun-js": "^0.7.12",
     "mandrill-api": "^1.0.45",
+    "nodemailer": "^2.6.0",
     "object-assign": "^4.1.0"
   },
   "devDependencies": {

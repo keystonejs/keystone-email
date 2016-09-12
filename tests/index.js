@@ -63,36 +63,35 @@ describe('utils', function () {
 	});
 });
 
-describe('mailgun transport', function () {
+describe('processAddress', function () {
+	var processAddress = require('../lib/util/processAddress');
 
-	describe('processAddress', function () {
-		var processAddress = require('../lib/transports/mailgun/processAddress');
-
-		it('should set a string provided to both the address and the email', function () {
-			var res = processAddress(testEmail);
-			assert.equal(res.email, testEmail);
-			assert.equal(res.address, testEmail);
-		});
-
-		it('should process an object with a name and an email', function () {
-			var singlesObj = { email: testEmail, name: testName };
-			var res = processAddress(singlesObj);
-			assert.equal(res.email, testEmail);
-			assert.equal(res.address, testAddress);
-		});
-		it('should process an object that includes a name object', function () {
-			var multiObj = { email: testEmail, name: nameObj };
-			var res = processAddress(multiObj);
-			assert.equal(res.email, testEmail);
-			assert.equal(res.address, testAddress);
-			assert.equal(res.firstName, nameObj.first);
-			assert.equal(res.lastName, nameObj.last);
-		});
-		it('should do something if given an empty object');
-		// TODO: Behaviours if the object is the wrong shape? Does not include email,
-		// name only has name.first etc etc
+	it('should set a string provided to both the address and the email', function () {
+		var res = processAddress(testEmail);
+		assert.equal(res.email, testEmail);
+		assert.equal(res.address, testEmail);
 	});
 
+	it('should process an object with a name and an email', function () {
+		var singlesObj = { email: testEmail, name: testName };
+		var res = processAddress(singlesObj);
+		assert.equal(res.email, testEmail);
+		assert.equal(res.address, testAddress);
+	});
+	it('should process an object that includes a name object', function () {
+		var multiObj = { email: testEmail, name: nameObj };
+		var res = processAddress(multiObj);
+		assert.equal(res.email, testEmail);
+		assert.equal(res.address, testAddress);
+		assert.equal(res.firstName, nameObj.first);
+		assert.equal(res.lastName, nameObj.last);
+	});
+	it('should do something if given an empty object');
+	// TODO: Behaviours if the object is the wrong shape? Does not include email,
+	// name only has name.first etc etc
+});
+
+describe('mailgun transport', function () {
 	describe('get recipients and vars', function () {
 		var getRecipientsAndVars = require('../lib/transports/mailgun/getRecipientsAndVars');
 		it('return an object with recipients and vars', function () {
@@ -136,11 +135,22 @@ describe('mandrill transport', function () {
 		it('should add a new entry to vars with the name if there is a name string');
 		it('should split up a name object, and push name, first_name and last_name to vars');
 	});
+
 	describe('index function', function () {
 		it('');
 	});
 });
 
+describe('nodemailer transport', function () {
+	describe('get recipients', function () {
+		// var getRecipients = require('../lib/transports/nodemailer/getRecipients');
+		it('');
+	});
+
+	describe('index function', function () {
+		it('');
+	});
+});
 
 // describe('render method');
 // describe('getSendOptions for mailgun');

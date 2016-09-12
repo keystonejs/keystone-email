@@ -3,6 +3,19 @@ This file sends an email with a test template to an email address.
 
 Usage:
 	TO=user@keystonejs.com MAILGUN_API_KEY=xyz MAILGUN_DOMAIN=abc TEMPLATE=simple node test-send
+
+For usage with Nodemailer you must first provide a test.config.js.
+Different transports can be specified and configured there, e.g SMTP:
+	module.exports = {
+		host: 'xyz',
+		port: 'abc',
+		auth: {
+			user: 'xyz',
+			pass: 'abc',
+		},
+	};
+then run
+	TO=user@keystonejs.com node test-send
 */
 
 var Email = require('./index');
@@ -14,8 +27,15 @@ var mailgunApiKey = process.env.MAILGUN_API_KEY;
 var mailgunDomain = process.env.MAILGUN_DOMAIN;
 var mandrillApiKey = process.env.MANDRILL_API_KEY;
 
-if (!mandrillApiKey && (!mailgunApiKey || !mailgunDomain)) {
-	throw Error('You must provide either or both Mailgun or Mandrill auth');
+var nodemailerConfig = require('./test.config.js');
+
+if (!mandrillApiKey && (!mailgunApiKey || !mailgunDomain) && !nodemailerConfig) {
+	throw Error('You must provide at least one auth config');
+}
+
+// default to simple template
+if (!template) {
+	template = 'simple';
 }
 
 var templateOptions = require('./tests/emails/' + template + '/options');
@@ -79,6 +99,34 @@ if (mandrillApiKey) {
 				console.error('🤕 Mandrill test failed with error:\n', err);
 			} else {
 				console.log('📬 Successfully sent Mandrill test with result:\n', result);
+			}
+		}
+	);
+}
+
+if (nodemailerConfig) {
+	Email.send(
+		// template path
+		templatePath,
+		// Email options
+		{
+			transport: 'nodemailer',
+		},
+		// Template locals
+		templateOptions,
+		// Send options
+		{
+			to: toArray,
+			subject: 'Why hello there! ... from keystone-email ' + Date.now(),
+			from: { name: 'Test', email: 'user@keystonejs.com' },
+			nodemailerConfig: nodemailerConfig,
+		},
+		// callback
+		function (err, result) {
+			if (err) {
+				console.error('🤕 Nodemailer test failed with error:\n', err);
+			} else {
+				console.log('📬 Successfully sent Nodemailer test with result:\n', result);
 			}
 		}
 	);

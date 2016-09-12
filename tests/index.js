@@ -55,40 +55,42 @@ describe('utils', function () {
 			assert.equal(typeof res2, 'function');
 		});
 	});
+
 	describe('is file', function () {
 		it('');
 	});
+
 	describe('is truthy', function () {
 		it('');
 	});
-});
 
-describe('processAddress', function () {
-	var processAddress = require('../lib/util/processAddress');
+	describe('processAddress', function () {
+		var processAddress = require('../lib/util/processAddress');
 
-	it('should set a string provided to both the address and the email', function () {
-		var res = processAddress(testEmail);
-		assert.equal(res.email, testEmail);
-		assert.equal(res.address, testEmail);
-	});
+		it('should set a string provided to both the address and the email', function () {
+			var res = processAddress(testEmail);
+			assert.equal(res.email, testEmail);
+			assert.equal(res.address, testEmail);
+		});
 
-	it('should process an object with a name and an email', function () {
-		var singlesObj = { email: testEmail, name: testName };
-		var res = processAddress(singlesObj);
-		assert.equal(res.email, testEmail);
-		assert.equal(res.address, testAddress);
+		it('should process an object with a name and an email', function () {
+			var singlesObj = { email: testEmail, name: testName };
+			var res = processAddress(singlesObj);
+			assert.equal(res.email, testEmail);
+			assert.equal(res.address, testAddress);
+		});
+		it('should process an object that includes a name object', function () {
+			var multiObj = { email: testEmail, name: nameObj };
+			var res = processAddress(multiObj);
+			assert.equal(res.email, testEmail);
+			assert.equal(res.address, testAddress);
+			assert.equal(res.firstName, nameObj.first);
+			assert.equal(res.lastName, nameObj.last);
+		});
+		it('should do something if given an empty object');
+		// TODO: Behaviours if the object is the wrong shape? Does not include email,
+		// name only has name.first etc etc
 	});
-	it('should process an object that includes a name object', function () {
-		var multiObj = { email: testEmail, name: nameObj };
-		var res = processAddress(multiObj);
-		assert.equal(res.email, testEmail);
-		assert.equal(res.address, testAddress);
-		assert.equal(res.firstName, nameObj.first);
-		assert.equal(res.lastName, nameObj.last);
-	});
-	it('should do something if given an empty object');
-	// TODO: Behaviours if the object is the wrong shape? Does not include email,
-	// name only has name.first etc etc
 });
 
 describe('mailgun transport', function () {

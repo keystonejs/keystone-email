@@ -55,18 +55,17 @@ describe('utils', function () {
 			assert.equal(typeof res2, 'function');
 		});
 	});
+
 	describe('is file', function () {
 		it('');
 	});
+
 	describe('is truthy', function () {
 		it('');
 	});
-});
-
-describe('mailgun transport', function () {
 
 	describe('processAddress', function () {
-		var processAddress = require('../lib/transports/mailgun/processAddress');
+		var processAddress = require('../lib/util/processAddress');
 
 		it('should set a string provided to both the address and the email', function () {
 			var res = processAddress(testEmail);
@@ -92,7 +91,9 @@ describe('mailgun transport', function () {
 		// TODO: Behaviours if the object is the wrong shape? Does not include email,
 		// name only has name.first etc etc
 	});
+});
 
+describe('mailgun transport', function () {
 	describe('get recipients and vars', function () {
 		var getRecipientsAndVars = require('../lib/transports/mailgun/getRecipientsAndVars');
 		it('return an object with recipients and vars', function () {
@@ -136,11 +137,22 @@ describe('mandrill transport', function () {
 		it('should add a new entry to vars with the name if there is a name string');
 		it('should split up a name object, and push name, first_name and last_name to vars');
 	});
+
 	describe('index function', function () {
 		it('');
 	});
 });
 
+describe('nodemailer transport', function () {
+	describe('get recipients', function () {
+		// var getRecipients = require('../lib/transports/nodemailer/getRecipients');
+		it('');
+	});
+
+	describe('index function', function () {
+		it('');
+	});
+});
 
 // describe('render method');
 // describe('getSendOptions for mailgun');

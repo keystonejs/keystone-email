@@ -3,18 +3,7 @@ This file sends an email with a test template to an email address.
 
 Usage:
 	TO=user@keystonejs.com MAILGUN_API_KEY=xyz MAILGUN_DOMAIN=abc TEMPLATE=simple node test-send
-
-For usage with Nodemailer you must first provide a test.config.js.
-Different transports can be specified and configured there, e.g SMTP:
-	module.exports = {
-		host: 'xyz',
-		port: 'abc',
-		auth: {
-			user: 'xyz',
-			pass: 'abc',
-		},
-	};
-then run
+For usage with nodemailer specify your transport config and auth in test.config.js, and then run:
 	TO=user@keystonejs.com node test-send
 */
 

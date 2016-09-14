@@ -99,6 +99,17 @@ The following `send()` options are applicable when using `mandrill` as the trans
 
 See [the Mandrill API Docs](https://mandrillapp.com/api/docs/messages.nodejs.html#method-send) for the full set of supported options.
 
+## Usage with Nodemailer
+
+The following `send()` options are applicable when using `nodemailer` as the transport:
+
+- `from` (String or Object) The name and email to send from (see below)
+- `inline_css` (Boolean) inline CSS classes in your template, defaults to `true`
+- `nodemailerConfig` (Object) Your nodemailer transport and auth configuration
+- `to` (String, Object or Array) The recipient(s) of the email (see below)
+
+See [the Nodemailer README](https://github.com/nodemailer/nodemailer) for more information about supported transports and plugins.
+
 ## From option
 
 The `from` option can be a String (email address), or Object containing `name` and `email`. In the object form, `name` can also be an object containing `first` and `last` (which will be concatenated with a space). This simplifies usage with `User` models in KeystoneJS. For example:

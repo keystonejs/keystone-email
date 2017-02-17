@@ -13,7 +13,7 @@ html(lang="en")
 			li email *|EMAIL|*
 			li testVar *|TESTVAR|*
 		p Template interpolation for Mailgun:
-			li name {{ name }}
-			li firstName {{ firstName }}
-			li email {{ email }}
-			li testVar {{ testVar }}
+			li name %recipient.name%
+			li firstName %recipient.firstName%
+			li email %recipient.email%
+			li testVar %recipient.testVar%

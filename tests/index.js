@@ -154,7 +154,7 @@ describe('nodemailer transport', function () {
 	});
 
 	describe('processAddress', function () {
-		var processAddress = require('../lib/transports/nodemailer/processAddress');
+		var processAddress = require('../lib/util/processAddress');
 
 		it('should set a string provided email', function () {
 			var res = processAddress(testEmail);

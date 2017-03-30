@@ -141,7 +141,7 @@ The `to` option can be a single recipient or an Array of recipients. Each recipi
 
 For Mandrill, `merge_vars` are built for each recipient, including `email`, `name`, `first_name` and `last_name`, as well as any properties in the `vars` object for each recipient. Nested objects are supported and are automatically flattened into the array format Mandrill expects.
 
-For Mailgun, `recipient-variables` are built for each recipient, including `email`, `name`, `first_name` and `last_name`, as well as any properties in the `vars` object for each recipient. Existing `recipient-variables` are left intact.
+For Mailgun, there is a list of default `recipient-variables` in the [mailchimp docs](https://documentation.mailgun.com/user_manual.html#mailing-lists). In addition, any custom variables will be attached to the `recipient` object in mailgun, and will be accessible in templates using `recipient.variableName`. 
 
 Full example of specifying recipients in various formats:
 

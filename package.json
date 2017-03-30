@@ -37,8 +37,10 @@
     "email",
     "keystone",
     "keystonejs",
-    "mandrill",
-    "mailgun"
+    "mailgun",
+    "ses",
+    "aws",
+    "mandrill"
   ],
   "author": "Jed Watson",
   "license": "MIT",

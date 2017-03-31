@@ -101,6 +101,8 @@ See [the Mandrill API Docs](https://mandrillapp.com/api/docs/messages.nodejs.htm
 
 ## Usage with Nodemailer
 
+Add a dependency for `nodemailer` to your project.
+
 The following `send()` options are applicable when using `nodemailer` as the transport:
 
 - `from` (String or Object) The name and email to send from (see below)
@@ -111,6 +113,8 @@ The following `send()` options are applicable when using `nodemailer` as the tra
 See [the Nodemailer README](https://github.com/nodemailer/nodemailer) for more information about supported transports and plugins.
 
 ## Usage with AWS SES
+
+Add a dependency for `aws-sdk`, i.e. add `"aws-sdk": "^2.20.0",` to package.json of your project.
 
 The following `send()` options are applicable when using `awsses` as the transport:
 

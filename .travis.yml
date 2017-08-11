@@ -10,5 +10,3 @@ notifications:
   email:
     on_failure: change
 after_success: 'npm run coverage && npm run codeclimate'
-before_install:
-  - npm install -g eslint-plugin-react

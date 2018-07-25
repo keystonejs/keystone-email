@@ -152,6 +152,56 @@ describe('nodemailer transport', function () {
 	describe('index function', function () {
 		it('');
 	});
+
+	describe('processAddress', function () {
+		var processAddress = require('../lib/util/processAddress');
+
+		it('should set a string provided email', function () {
+			var res = processAddress(testEmail);
+			assert.equal(res.name, testEmail);
+			assert.equal(res.address, testEmail);
+		});
+
+		it('should process an object with a name and an email', function () {
+			var singlesObj = { email: testEmail, name: testName };
+			var res = processAddress(singlesObj);
+			assert.equal(res.name, testName);
+			assert.equal(res.address, testEmail);
+		});
+
+		it('should process an object with a name and an address', function () {
+			var singlesObj = { address: testEmail, name: testName };
+			var res = processAddress(singlesObj);
+			assert.equal(res.name, testName);
+			assert.equal(res.address, testEmail);
+		});
+
+		it('should set a string provided address', function () {
+			var res = processAddress(testAddress);
+			assert.equal(res.name, testName);
+			assert.equal(res.address, testEmail);
+		});
+
+		it('should process an object that includes a name object', function () {
+			var multiObj = { email: testEmail, name: nameObj };
+			var res = processAddress(multiObj);
+			assert.equal(res.name, nameObj.first + ' ' + nameObj.last);
+			assert.equal(res.address, testEmail);
+			assert.equal(res.firstName, nameObj.first);
+			assert.equal(res.lastName, nameObj.last);
+		});
+		it('should process an object without a name and an address', function () {
+			var res = processAddress({});
+			assert.equal(res.name, '');
+			assert.equal(res.address, '');
+		});
+
+		it('should process an string that it is not an email', function () {
+			var res = processAddress(testName);
+			assert.equal(res.name, testName);
+			assert.equal(res.address, '');
+		});
+	});
 });
 
 // describe('render method');
@@ -212,6 +262,10 @@ describe('email sending', function () {
 	});
 	it('should use mandrill transport is passed as option', function () {
 		var template = new Email('./tests/emails/simple/template.pug', { transport: 'mandrill' });
+		assert.equal(typeof template.transport, 'function');
+	});
+	it('should use nodemailer transport is passed as option', function () {
+		var template = new Email('./tests/emails/simple/template.pug', { transport: 'nodemailer' });
 		assert.equal(typeof template.transport, 'function');
 	});
 

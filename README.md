@@ -126,6 +126,7 @@ The following `send()` options are applicable when using `awsses` as the transpo
 - `to` (String, Object or Array) The recipient(s) of the email (see below)
 - `cc` (String, Object or Array) The CC recipient(s) of the email (same format as `to`, see below)
 - `bcc` (String, Object or Array) The BCC recipient(s) of the email (same format as `to`, see below)
+- `replyTo` (String, Object or Array) The Reply-To address(es) of the email (same format as `to`, see below)
 
 See [the AWS SES API Docs](http://docs.aws.amazon.com/ses/latest/APIReference/API_SendEmail.html) for the full set of supported options.
 

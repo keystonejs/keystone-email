@@ -5,7 +5,7 @@ Email helper for KeystoneJS and Node.js Applications. Makes it easy to send dyna
 Features include:
 
 * Express-like template system (including support for any express-compatible template engine)
-* Support for different email sending services (Mandrill and Mailgun are available now, more may be added)
+* Support for different email sending services (Mandrill, Mailgun and AWS SES are available now, more may be added)
 * Understands Keystone User models, making it easy to send emails to the results of a query
 * Automatically transforms user variables into the correct format for each email service, for mail-merge style variable use
 * CSS Stylesheets are automatically inlined for robust email client compatibility
@@ -101,6 +101,8 @@ See [the Mandrill API Docs](https://mandrillapp.com/api/docs/messages.nodejs.htm
 
 ## Usage with Nodemailer
 
+Add a dependency for `nodemailer` to your project.
+
 The following `send()` options are applicable when using `nodemailer` as the transport:
 
 - `from` (String or Object) The name and email to send from (see below)
@@ -109,6 +111,23 @@ The following `send()` options are applicable when using `nodemailer` as the tra
 - `to` (String, Object or Array) The recipient(s) of the email (see below)
 
 See [the Nodemailer README](https://github.com/nodemailer/nodemailer) for more information about supported transports and plugins.
+
+## Usage with AWS SES
+
+Add a dependency for `aws-sdk`, i.e. add `"aws-sdk": "^2.20.0",` to package.json of your project.
+
+The following `send()` options are applicable when using `awsses` as the transport:
+
+- `apiKey` (required, String) Your API Key, defaults to `process.env.AWS_SES_API_KEY`
+- `apiSecret` (required, String) Your Secret Key, defaults to `process.env.AWS_SES_SECRET_KEY`
+- `region` (required, String) Your Sending Region i.e., us-east-1, defaults to `process.env.AWS_SES_REGION`
+- `from` (String or Object) The name and email to send from (see below)
+- `inline_css` (Boolean) inline CSS classes in your template, defaults to `true`
+- `to` (String, Object or Array) The recipient(s) of the email (see below)
+- `cc` (String, Object or Array) The CC recipient(s) of the email (same format as `to`, see below)
+- `bcc` (String, Object or Array) The BCC recipient(s) of the email (same format as `to`, see below)
+
+See [the AWS SES API Docs](http://docs.aws.amazon.com/ses/latest/APIReference/API_SendEmail.html) for the full set of supported options.
 
 ## From option
 
@@ -180,6 +199,10 @@ You could previously use a directory as the template name, and Keystone.Email wo
 ### To, From and Contents validation
 
 Keystone would previous return errors if the subject, contents, recipient(s) or the sender address were invalid. This is no longer handled by the library, please make sure you validate these options before sending the emails. If the transport validates these options, errors will be passed directly to the callback.
+
+### AWS SES limitations
+
+AWS SES does not support click tracking
 
 ## License
 

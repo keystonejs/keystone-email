@@ -18,7 +18,7 @@ var mandrillApiKey = process.env.MANDRILL_API_KEY;
 var testNodeMailer = process.env.TEST_NODEMAILER === 'true';
 
 if (testNodeMailer) {
-	var nodemailerConfig = require('./test.config.js');
+	var nodemailerConfig = require('./test.config.example.js');
 }
 
 if (!mandrillApiKey && (!mailgunApiKey || !mailgunDomain) && (testNodeMailer && !nodemailerConfig)) {

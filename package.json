@@ -4,6 +4,7 @@
   "description": "Email helper for KeystoneJS Apps",
   "main": "index.js",
   "dependencies": {
+    "aws-sdk": "^2.7.11",
     "debug": "^3.1.0",
     "html-to-text": "^4.0.0",
     "juice": "^4.3.1",
@@ -24,11 +25,11 @@
     "pug": "^2.0.3"
   },
   "scripts": {
-    "test": "npm run lint && npm run test-unit",
-    "test-unit": "mocha tests",
-    "coverage": "istanbul cover _mocha tests",
     "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
-    "lint": "eslint . --ignore-path .gitignore"
+    "coverage": "istanbul cover _mocha tests",
+    "lint": "eslint . --ignore-path .gitignore",
+    "test": "npm run lint && npm run test-unit",
+    "test-unit": "mocha tests"
   },
   "repository": {
     "type": "git",
@@ -38,8 +39,10 @@
     "email",
     "keystone",
     "keystonejs",
-    "mandrill",
-    "mailgun"
+    "mailgun",
+    "ses",
+    "aws",
+    "mandrill"
   ],
   "author": "Jed Watson",
   "license": "MIT",

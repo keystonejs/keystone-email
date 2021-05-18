@@ -4,7 +4,7 @@ This file sends an email with a test template to an email address.
 Usage:
 	TO=user@keystonejs.com MAILGUN_API_KEY=xyz MAILGUN_DOMAIN=abc TEMPLATE=simple node test-send
 For usage with nodemailer specify your transport config and auth in test.config.js, and then run:
-	TO=user@keystonejs.com node test-send
+	TO=user@keystonejs.com TEST_NODEMAILER=true node test-send
 */
 
 var Email = require('./index');
@@ -15,10 +15,13 @@ var to = process.env.TO;
 var mailgunApiKey = process.env.MAILGUN_API_KEY;
 var mailgunDomain = process.env.MAILGUN_DOMAIN;
 var mandrillApiKey = process.env.MANDRILL_API_KEY;
+var testNodeMailer = process.env.TEST_NODEMAILER === 'true';
 
-var nodemailerConfig = require('./test.config.js');
+if (testNodeMailer) {
+	var nodemailerConfig = require('./test.config.js');
+}
 
-if (!mandrillApiKey && (!mailgunApiKey || !mailgunDomain) && !nodemailerConfig) {
+if (!mandrillApiKey && (!mailgunApiKey || !mailgunDomain) && (testNodeMailer && !nodemailerConfig)) {
 	throw Error('You must provide at least one auth config');
 }
 

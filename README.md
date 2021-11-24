@@ -1,3 +1,11 @@
+<div align="center">
+  <h1>⚠️ Archived</h1>
+  <p>This repository is archived and is no longer maintained.</p>
+  <p>For the latest Keystone release please visit <a href="https://keystonejs.com">the Keystone website.</a></p>
+  <hr>
+</div>
+<br>
+
 # keystone-email
 
 Email helper for KeystoneJS and Node.js Applications. Makes it easy to send dynamic emails from templates, to one or multiple recipients.

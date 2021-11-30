@@ -51,8 +51,10 @@ describe('utils', function () {
 		it('should return transport if transport is found', function () {
 			var res1 = getTransport('mailgun');
 			var res2 = getTransport('mandrill');
+			var res3 = getTransport('awsses');
 			assert.equal(typeof res1, 'function');
 			assert.equal(typeof res2, 'function');
+			assert.equal(typeof res3, 'function');
 		});
 	});
 
